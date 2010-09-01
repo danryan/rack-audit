@@ -1,6 +1,44 @@
 = rack-audit
 
-Description goes here.
+Rack::Audit
+
+Can log anything into a database for auditing purposes
+
+* Very simple set up
+* Multiple options
+- current_user
+-- specific attribute
+- remote_ip
+- controller
+- action 
+- params
+
+To log an action, simply include the `log` method in your action:
+
+    def index
+      @foos = Foo.all
+      audit!
+    end
+
+AuditLog can be set up for all actions in a controller as well:
+
+    class FooController < ApplicationController
+      audit
+  
+      def index
+        @foos = Foo.all
+      end
+      ...
+    end
+
+or for specific actions:
+
+    audit :only => [ :update, :create ]
+
+or exclude actions:
+
+    audit :except => [ :index, :show ]
+
 
 == Note on Patches/Pull Requests
  
